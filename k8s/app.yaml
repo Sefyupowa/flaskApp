@@ -40,6 +40,8 @@ metadata:
   name: route-openshift
 spec:
   host: superapp.apps-crc.testing
+  tls:
+    termination: edge
   port:
     targetPort: 8080 
   to:
