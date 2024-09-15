@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: flask-app-deployment
+spec:
+  replicas: 3  # Number of pod replicas
+  selector:
+    matchLabels:
+      app: flask-app
+  template:
+    metadata:
+      labels:
+        app: flask-app
+    spec:
+      containers:
+      - name: flask-app
+        image: pedro229/flask-app:v1  # The Docker image we built earlier
+        ports:
+        - containerPort: 8080
+        env:
+        - name: ENVIRONMENT
+          value: "dev"  # Set the environment variable here
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: flask-app-service
+spec:
+  selector:
+    app: flask-app
+  ports:
+  - protocol: TCP
+    port: 80  # External port
+    targetPort: 8080  # Internal container port
+  type: NodePort  # Use "NodePort" if on a local cluster without a cloud provider
