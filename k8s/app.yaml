@@ -33,4 +33,15 @@ spec:
     port: 8080               
     protocol: TCP
     targetPort: 8080    
-  
+---
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: route-openshift
+spec:
+  host: superapp.apps-crc.testing
+  port:
+    targetPort: 8080 
+  to:
+    kind: Service
+    name: flask-app-service
