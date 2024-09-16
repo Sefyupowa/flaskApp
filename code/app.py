@@ -11,9 +11,34 @@ environment = os.getenv('ENVIRONMENT', 'notSet')
 db_config = {
     'user': os.getenv('MYSQL_USER', 'root'),
     'password': os.getenv('MYSQL_PASSWORD', 'password'),
-    'host': os.getenv('MYSQL_HOST', 'mysql'),
+    'host': os.getenv('MYSQL_HOST', 'mysql-container'),
+    'port': os.getenv('MYSQL_PORT', 3306),
     'database': os.getenv('MYSQL_DATABASE', 'testdb')
 }
+
+def create_table_if_not_exists():
+    """Create the words table if it does not already exist."""
+    connection = mysql.connector.connect(**db_config)
+    cursor = connection.cursor()
+
+    create_table_query = """
+    CREATE TABLE IF NOT EXISTS words (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        word VARCHAR(255) NOT NULL
+    )
+    """
+
+    try:
+        cursor.execute(create_table_query)
+        connection.commit()
+    except mysql.connector.Error as err:
+        print(f"Error creating table: {err}")
+    finally:
+        cursor.close()
+        connection.close()
+
+# Create the table if it doesn't exist
+create_table_if_not_exists()
 
 # Route to insert words into MySQL database
 @app.route('/add_word', methods=['POST'])
