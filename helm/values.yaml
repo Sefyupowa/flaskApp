@@ -5,4 +5,4 @@ envName: env default
 replicas: 1
 
 imageTage: pedro229/flask-app
-version: v2
+version: v5
