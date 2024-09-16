@@ -20,5 +20,4 @@ spec:
         env:
         - name: ENVIRONMENT
           value: {{ .Values.envName }}
-        - name: MYSQL_HOST
-          value: "3306"
+        
