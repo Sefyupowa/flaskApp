@@ -1,0 +1,13 @@
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: route-openshift
+spec:
+  host: superapp.apps-crc.testing
+  tls:
+    termination: edge
+  port:
+    targetPort: 8080 
+  to:
+    kind: Service
+    name: flask-app-service
