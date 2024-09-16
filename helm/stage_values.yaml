@@ -1,0 +1,5 @@
+appName: flask-app
+
+envName: stageValue
+
+replicas: 1
