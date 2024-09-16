@@ -7,7 +7,6 @@ spec:
   - port: 3306
   selector:
     app: mysql
-  clusterIP: None
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -30,7 +29,12 @@ spec:
         env:
           # Use secret in real usage
         - name: MYSQL_ROOT_PASSWORD
-          value: password
+          valueFrom:
+            secretKeyRef:
+              name: mysql-secrets
+              value:  mysql-root-password
+        - name: MYSQL_DATABASE
+          value: testdb
         ports:
         - containerPort: 3306
           name: mysql
