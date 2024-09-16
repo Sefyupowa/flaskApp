@@ -34,11 +34,6 @@ spec:
               key: mysql-root-password
         - name: MYSQL_DATABASE
           value: testdb
-        - name: MYSQL_USER
-          valueFrom:
-            secretKeyRef:
-              name: mysql-secrets
-              key: mysql-user
         - name: MYSQL_PASSWORD
           valueFrom:
             secretKeyRef:
