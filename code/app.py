@@ -12,7 +12,7 @@ db_config = {
     'user': os.getenv('MYSQL_USER', 'root'),  # Use MYSQL_USER for non-root users if needed
     'password': os.getenv('MYSQL_PASSWORD', 'password'),  # MYSQL_PASSWORD for non-root users
     'host': os.getenv('MYSQL_HOST', 'mysql'),
-    'port': 3306,
+    'port': int(os.getenv('MYSQL_SERVICE_PORT', 3306)),
     'database': os.getenv('MYSQL_DATABASE', 'testdb')
 }
 
