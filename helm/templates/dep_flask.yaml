@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: {{ .Values.appName }}
-        image: pedro229/flask-app:v3  
+        image: pedro229/flask-app:v4  
         ports:
         - containerPort: 8080
         env:
