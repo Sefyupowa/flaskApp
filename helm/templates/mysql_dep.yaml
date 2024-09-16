@@ -27,8 +27,6 @@ spec:
       - image: mysql:5.7  # Use the appropriate MySQL image
         name: mysql
         env:
-        - name: MYSQL_PORT
-          value: 3306 
         - name: MYSQL_ROOT_PASSWORD
           valueFrom:
             secretKeyRef:

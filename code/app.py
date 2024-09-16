@@ -9,13 +9,12 @@ environment = os.getenv('ENVIRONMENT', 'notSet')
 
 # MySQL configuration (Update this according to your local or cloud MySQL settings)
 db_config = {
-    'user': 'root',
-    'password': os.getenv('MYSQL_ROOT_PASSWORD', 'password'),
+    'user': os.getenv('MYSQL_USER', 'root'),  # Use MYSQL_USER for non-root users if needed
+    'password': os.getenv('MYSQL_PASSWORD', 'password'),  # MYSQL_PASSWORD for non-root users
     'host': os.getenv('MYSQL_HOST', 'mysql-container'),
     'port': int(os.getenv('MYSQL_PORT', 3306)),
     'database': os.getenv('MYSQL_DATABASE', 'testdb')
 }
-
 
 def create_table_if_not_exists():
     """Create the words table if it does not already exist."""
