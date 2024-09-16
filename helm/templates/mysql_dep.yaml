@@ -25,7 +25,7 @@ spec:
     spec:
       containers:
       - image: mysql:5.7  # Use the appropriate MySQL image
-        name: mysql
+        name: mysql-container
         env:
         - name: MYSQL_ROOT_PASSWORD
           valueFrom:
