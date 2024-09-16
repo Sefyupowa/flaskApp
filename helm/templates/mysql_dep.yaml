@@ -24,17 +24,26 @@ spec:
         app: mysql
     spec:
       containers:
-      - image: openshift/mysql-56-centos7
+      - image: mysql:5.7  # Use the appropriate MySQL image
         name: mysql
         env:
-          # Use secret in real usage
         - name: MYSQL_ROOT_PASSWORD
           valueFrom:
             secretKeyRef:
               name: mysql-secrets
-              value:  mysql-root-password
+              key: mysql-root-password
         - name: MYSQL_DATABASE
           value: testdb
+        - name: MYSQL_USER
+          valueFrom:
+            secretKeyRef:
+              name: mysql-secrets
+              key: mysql-user
+        - name: MYSQL_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: mysql-secrets
+              key: mysql-password
         ports:
         - containerPort: 3306
           name: mysql
@@ -45,3 +54,4 @@ spec:
       - name: mysql-persistent-storage
         persistentVolumeClaim:
           claimName: mysql-pv-claim
+
