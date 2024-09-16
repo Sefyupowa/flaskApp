@@ -1,22 +1,30 @@
-# Use the official Python base image with Alpine
-FROM python:3.12-alpine
+# Step 1: Use official Python base image
+FROM python:3.9-slim
 
-# Set the working directory in the container
+# Step 2: Set environment variables to avoid writing .pyc files and enable buffer
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=1
+
+# Step 3: Set the working directory inside the container
 WORKDIR /app
 
-# Copy the current directory contents into the container
-COPY . .
+# Step 4: Copy requirements.txt file (if present) for dependency installation
+COPY requirements.txt /app/
 
-# Install dependencies
-RUN pip install --no-cache-dir Flask
+# Step 5: Install dependencies
+RUN pip install --no-cache-dir -r requirements.txt
 
-# Expose port 8080 to the outside world
+# Step 6: Copy the entire app to the working directory
+COPY . /app/
+
+# Step 7: Expose port 8080 for the Flask application
 EXPOSE 8080
 
-# Set the environment variable to run Flask
-ENV FLASK_APP=app.py
-ENV FLASK_RUN_HOST=0.0.0.0
-ENV FLASK_RUN_PORT=8080
+# Step 8: Set environment variables for MySQL connection (optional, these can also be set in a docker-compose.yml file)
+ENV MYSQL_USER=root
+ENV MYSQL_PASSWORD=password
+ENV MYSQL_HOST=mysql
+ENV MYSQL_DATABASE=testdb
 
-# Run the application
-CMD ["flask", "run"]
+# Step 9: Command to run the Flask application
+CMD ["python", "app.py"]

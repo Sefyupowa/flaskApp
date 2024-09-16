@@ -4,47 +4,18 @@ from flask import Flask, request, jsonify
 
 app = Flask(__name__)
 
-# MySQL configuration (updated for Kubernetes)
-root_db_config = {
-    'user': 'root',
-    'password': 'password',
-    'host': 'mydb'  # MySQL service name in Kubernetes
-}
+# Retrieve environment name from the environmental variable 'ENVIRONMENT', default to 'notSet' if not set
+environment = os.getenv('ENVIRONMENT', 'notSet')
 
-# MySQL config for connecting to the actual database
+# MySQL configuration (Update this according to your local or cloud MySQL settings)
 db_config = {
-    'user': 'root',
-    'password': 'password',
-    'host': 'mydb',
-    'database': 'testdb'
+    'user': os.getenv('MYSQL_USER', 'root'),
+    'password': os.getenv('MYSQL_PASSWORD', 'password'),
+    'host': os.getenv('MYSQL_HOST', 'mysql'),
+    'database': os.getenv('MYSQL_DATABASE', 'testdb')
 }
 
-# Function to create the database and the table if they don't exist
-def init_db():
-    # Step 1: Connect to MySQL without specifying a database to create 'testdb'
-    connection = mysql.connector.connect(**root_db_config)
-    cursor = connection.cursor()
-
-    # Create the database if it doesn't exist
-    cursor.execute("CREATE DATABASE IF NOT EXISTS testdb")
-    cursor.close()
-    connection.close()
-
-    # Step 2: Now connect to the 'testdb' database
-    connection = mysql.connector.connect(**db_config)
-    cursor = connection.cursor()
-
-    # Create the 'words' table if it doesn't exist
-    cursor.execute("""
-        CREATE TABLE IF NOT EXISTS words (
-            id INT AUTO_INCREMENT PRIMARY KEY,
-            word VARCHAR(255) NOT NULL
-        )
-    """)
-    connection.commit()
-    cursor.close()
-    connection.close()
-
+# Route to insert words into MySQL database
 @app.route('/add_word', methods=['POST'])
 def add_word():
     word = request.json.get('word')
@@ -67,6 +38,7 @@ def add_word():
 
     return jsonify({"message": "Word added successfully!"}), 201
 
+# Route to retrieve all words from MySQL database
 @app.route('/words', methods=['GET'])
 def get_words():
     # Connect to MySQL
@@ -90,8 +62,7 @@ def get_words():
 
 @app.route('/')
 def hello_world():
-    return f'Hello World! from {os.getenv("ENVIRONMENT", "notSet")}'
+    return f'Hello World! from {environment}'
 
 if __name__ == '__main__':
-    init_db()  # Initialize the DB and create tables
     app.run(host="0.0.0.0", port=8080)
