@@ -4,4 +4,4 @@ envName: dev
 replicas: 1
 
 
-version: v7
+version: v8
