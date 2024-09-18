@@ -1,8 +1,8 @@
 appName: flask-app
 
-envName: env 
+envName: env default
 
 replicas: 1
 
 imageTage: pedro229/flask-app
-version: v5
+version: v1
