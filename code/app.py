@@ -87,7 +87,7 @@ def get_words():
 
 @app.route('/')
 def hello_world():
-    return f'Hello World! from {environment} : (this is version v6)'
+    return f'Hello World! change (horizon change) value in code= v7  \nchange value in yaml file= {environment}'
 
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=8080)
