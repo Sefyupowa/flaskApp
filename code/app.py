@@ -85,13 +85,9 @@ def get_words():
 
     return jsonify({"words": words_list})
 
+@app.route('/')
 def hello_world():
-    horizon_change_value = "v8"
-  
-    
-    # Using a raw string (r-string) to handle escape sequences like '\n'
-    return f'Hello World! change (horizon change) value in code = {horizon_change_value} \nchange value in yaml file = {environment}'
-
+     return f'Hello World! change (horizon change) value in code = v9 \nchange value in yaml file = {environment}'
 
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=8080)
