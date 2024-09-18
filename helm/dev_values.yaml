@@ -3,3 +3,6 @@ appName: flask-app
 envName: dev
 
 replicas: 1
+
+imageTage: pedro229/flask-app
+version: v6
