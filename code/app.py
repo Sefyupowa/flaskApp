@@ -87,7 +87,7 @@ def get_words():
 
 @app.route('/')
 def hello_world():
-    return f'Hello World! from {environment}'
+    return f'Hello World! from {environment} : (this is version v6)'
 
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=8080)
