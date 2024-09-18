@@ -1,7 +1,0 @@
-appName: flask-app
-
-envName: dev 
-replicas: 1
-
-
-version: v9
